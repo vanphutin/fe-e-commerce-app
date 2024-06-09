@@ -1,0 +1,116 @@
+.header {
+  height: 100px;
+  background-color: rgba(238, 238, 238, 0.568);
+  font-family: "Poppins", sans-serif;
+  margin: auto auto;
+
+  .header-items {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-logo {
+    .logo-name {
+      font-weight: 800;
+      padding-left: 10px;
+      font-size: 22px;
+    }
+  }
+  .header-menu {
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin: 0;
+    }
+    li {
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+    }
+  }
+  .header-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .header-search {
+      height: 50px;
+      width: 50px;
+      background-color: #fff;
+      line-height: 50px; /* Đặt line-height bằng chiều cao của phần tử */
+      text-align: center; /* Căn giữa theo chiều ngang */
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 20px;
+
+      input {
+        line-height: normal;
+      }
+    }
+
+    .header-heart-cart {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      background-color: #fff;
+      height: 50px;
+      width: 230px;
+      border-radius: 8px;
+
+      .heart {
+        margin-bottom: 0;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        p {
+          margin-bottom: 0;
+          margin-left: 10px;
+          font-weight: 700;
+        }
+
+        &::after {
+          content: "";
+          height: 30px;
+          width: 1px;
+          background-color: rgb(219, 219, 219);
+          margin-left: 30px;
+        }
+      }
+
+      .cart {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        p {
+          margin-bottom: 0;
+          margin-left: 10px;
+          font-weight: 700;
+        }
+      }
+    }
+    .header-avata {
+      height: 50px;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      img {
+        border-radius: 8px;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        cursor: pointer;
+      }
+    }
+  }
+}
