@@ -5,6 +5,7 @@ import "./reset.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import Carousel from "react-bootstrap/Carousel";
+import store from "./redux/store";
 
 function App() {
   return (

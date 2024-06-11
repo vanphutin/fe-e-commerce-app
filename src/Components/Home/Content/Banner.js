@@ -4,7 +4,7 @@ import "./Banner.scss";
 
 const Banner = () => {
   return (
-    <div className="banner">
+    <div className="banner ">
       <img src={cover} alt="" className="banner-content" />
     </div>
   );

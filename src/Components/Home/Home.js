@@ -4,12 +4,14 @@ import Products from "../Products/Products";
 
 const Home = () => {
   return (
-    <div className="home">
-      <div className="home-slide">
-        <Banner />
-        <Products />
+    <>
+      <div className="home container">
+        <div className="home-slide">
+          <Banner />
+          <Products />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

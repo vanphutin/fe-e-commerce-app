@@ -1,6 +1,6 @@
 import axios from "../utils/axiosCustomize";
 
-const getAllProducts = () => {
-  return axios.get("/products");
+const getAllProducts = (page) => {
+  return axios.get(`/products?limit= ${page}`);
 };
 export { getAllProducts };

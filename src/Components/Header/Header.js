@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaHeart } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
@@ -7,9 +7,11 @@ import avata from "../../assets/avata/Avatar.png";
 import logo from "../../assets/logo/Vector.svg";
 import "./Header.scss";
 import "../../assets/font/Poppins/Poppins-Bold.ttf";
+import { useSelector } from "react-redux";
 
 const Header = (props) => {
   const [hiddenInput, setHiddenInput] = useState(false);
+  const count = useSelector((state) => state.count);
 
   const handleClick = () => {
     setHiddenInput(!hiddenInput);
@@ -43,9 +45,23 @@ const Header = (props) => {
           </div>
           <div className="header-heart-cart">
             <div className="heart">
-              <FaRegHeart size="24px" className="font" />
-              <p>03</p>
+              {count.length >= 1 ? (
+                <>
+                  <FaHeart
+                    size="24px"
+                    className="font"
+                    style={{ color: "red" }}
+                  />
+                  <p>{count}</p>
+                </>
+              ) : (
+                <>
+                  <FaRegHeart size="24px" className="font" />
+                  <p>{count}</p>
+                </>
+              )}
             </div>
+
             <div className="cart">
               <FaShoppingCart size="24px" />
               <p className="pice">$55.55</p>
