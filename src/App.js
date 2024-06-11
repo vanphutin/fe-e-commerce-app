@@ -6,12 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import Carousel from "react-bootstrap/Carousel";
 import store from "./redux/store";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   return (
     <div className="App">
       <Header />
       <Home />
+      {/* <Footer /> */}
     </div>
   );
 }
