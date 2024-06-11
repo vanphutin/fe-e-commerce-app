@@ -7,6 +7,7 @@ import { setCount } from "../../../redux/countSlice";
 import Select from "react-select";
 import "../Products.scss";
 import "./ViewProducts.scss";
+import { Link } from "react-router-dom";
 
 const options = [
   { value: "All", label: "All" },
@@ -47,7 +48,7 @@ const ViewProducts = () => {
       } else {
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
       }
-      setActiveLoves(Array(res.data.length).fill(false));
+      setActiveLoves((heart) => [...heart], Array(res.data.length).fill(false));
 
       if (res.data.length < page) {
         setLoading(false);
@@ -77,6 +78,9 @@ const ViewProducts = () => {
     setPage((prevPage) => prevPage + 5);
   };
 
+  const handleClickProduct = (index) => {
+    alert(index);
+  };
   return (
     <div className="total-tavAzza browse-categories">
       <div>
@@ -103,13 +107,15 @@ const ViewProducts = () => {
           <div className="total-tavAzza-items">
             {products.length > 0 &&
               products.slice(0, page).map((item, index) => (
-                <div className="total-tavAzza-item" key={index}>
+                <div className="total-tavAzza-item">
                   <div className="total-tavAzza-item__top">
                     <div
                       className="img_product"
                       style={{ position: "relative" }}
                     >
-                      <img src={item.image} alt="" />
+                      <Link to={`/products/${item.id}`} key={item.id}>
+                        <img src={item.image} alt="" />
+                      </Link>
                       <div
                         className={`heart-love ${
                           activeLoves[index] ? "active" : ""
@@ -120,17 +126,19 @@ const ViewProducts = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="total-tavAzza-item__bottom">
-                    <div className="title_product">{item.title}</div>
-                    <div className="category_product">{item.category}</div>
-                    <div className="price-star_product">
-                      <div className="price_product">${item.price}</div>
-                      <div className="star_product">
-                        <IoStar className="star" />
-                        <p>{item.rating.rate}</p>
+                  <Link to={`/products/${item.id}`} key={item.id}>
+                    <div className="total-tavAzza-item__bottom">
+                      <div className="title_product">{item.title}</div>
+                      <div className="category_product">{item.category}</div>
+                      <div className="price-star_product">
+                        <div className="price_product">${item.price}</div>
+                        <div className="star_product">
+                          <IoStar className="star" />
+                          <p>{item.rating.rate}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
           </div>

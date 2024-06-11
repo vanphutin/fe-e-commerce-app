@@ -1,6 +1,9 @@
 .App {
   font-family: "Poppins", sans-serif;
   background-color: rgba(248, 248, 251, 0.458);
+  padding: 0;
+  margin: 0;
+  // box-sizing: border-box;
 }
 
 .App-logo {
@@ -43,4 +46,9 @@
   /* Thay đổi đường dẫn tới tệp font tương ứng nếu cần */
   font-weight: normal;
   font-style: normal;
+}
+a,
+li {
+  text-decoration: none;
+  color: black;
 }

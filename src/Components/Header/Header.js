@@ -8,6 +8,7 @@ import logo from "../../assets/logo/Vector.svg";
 import "./Header.scss";
 import "../../assets/font/Poppins/Poppins-Bold.ttf";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Header = (props) => {
   const [hiddenInput, setHiddenInput] = useState(false);
@@ -17,22 +18,32 @@ const Header = (props) => {
     setHiddenInput(!hiddenInput);
   };
   return (
-    <div className="header">
+    <div className="header ">
       <div className="header-items container">
         <div className="header-logo">
-          <img src={logo} alt="" className="logo" />
-          <span className="logo-name">grocerymart</span>
+          <Link to="/">
+            <img src={logo} alt="" className="logo" />
+            <span className="logo-name">vanphutin</span>
+          </Link>
         </div>
         <div className="header-menu">
           <ul>
-            <li>
-              Departments <FaAngleDown />
+            <li className="home ">
+              <Link to="/" className="active">
+                Home
+              </Link>
             </li>
             <li>
               Grocery <FaAngleDown />
             </li>
             <li>
               Beauty <FaAngleDown />
+            </li>
+            <li>
+              <Link to="/admin">Admin</Link> <FaAngleDown />
+            </li>
+            <li>
+              <Link to="/users">Users</Link> <FaAngleDown />
             </li>
           </ul>
         </div>

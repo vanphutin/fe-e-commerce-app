@@ -12,8 +12,15 @@ const getAllCategories = () => {
 
 //Get products in a specific category
 const getCategory = (nameCategory) => {
-  return axios.get(`products/category/${nameCategory}`);
+  return axios.get(`/products/category/${nameCategory}`);
+};
+
+//Get a single product
+
+const getProductSinger = (id) => {
+  return axios.get(`/products/${id}`);
 };
 export { getAllProducts };
 export { getAllCategories };
 export { getCategory };
+export { getProductSinger };

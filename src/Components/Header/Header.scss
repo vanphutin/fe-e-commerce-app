@@ -3,6 +3,7 @@
   background-color: rgba(238, 238, 238, 0.568);
   font-family: "Poppins", sans-serif;
   margin: auto auto;
+  padding: 0;
 
   .header-items {
     height: 100%;
@@ -30,6 +31,10 @@
       font-weight: 700;
       font-size: 15px;
       cursor: pointer;
+
+      a.active {
+        color: green;
+      }
     }
   }
   .header-info {
