@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Users from "./Components/Users/Users";
 import Admin from "./Components/Admin/Admin";
 import ProductPage from "./Components/Products/Content/ProductPage";
+import Login from "./Components/Auth/Login";
+import Register from "./Components/Auth/Register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +21,8 @@ root.render(
         <Route path="/users" element={<Users />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/products/:id" element={<ProductPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </Provider>

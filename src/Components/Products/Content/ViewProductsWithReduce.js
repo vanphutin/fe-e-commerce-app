@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import { getAllProducts, getCategory } from "../../../severs/apiService";
 import { FaHeart } from "react-icons/fa";
 import { IoStar } from "react-icons/io5";
@@ -17,25 +17,75 @@ const options = [
   { value: "women's clothing", label: "Women's Clothing" },
 ];
 
-const ViewProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [activeLoves, setActiveLoves] = useState([]);
-  const [page, setPage] = useState(10);
-  const [loading, setLoading] = useState(true);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-  const dispatch = useDispatch();
+// Initial state
+const initialState = {
+  products: [],
+  activeLoves: [],
+  page: 10,
+  loading: true,
+  selectedOption: options[0],
+};
+
+// Reducer function
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
+        activeLoves: Array(action.payload.length).fill(false),
+        loading: false,
+      };
+    case "APPEND_PRODUCTS":
+      return {
+        ...state,
+        products: [...state.products, ...action.payload],
+        activeLoves: [
+          ...state.activeLoves,
+          ...Array(action.payload.length).fill(false),
+        ],
+        loading: false,
+      };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case "SET_SELECTED_OPTION":
+      return {
+        ...state,
+        selectedOption: action.payload,
+        page: 10,
+        loading: true,
+      };
+    case "INCREMENT_PAGE":
+      return {
+        ...state,
+        page: state.page + 5,
+      };
+    case "TOGGLE_LOVE":
+      const newActiveLoves = [...state.activeLoves];
+      newActiveLoves[action.payload] = !newActiveLoves[action.payload];
+      return {
+        ...state,
+        activeLoves: newActiveLoves,
+      };
+    default:
+      return state;
+  }
+};
+
+const ViewProductsWithReduce = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const reduxDispatch = useDispatch();
   const isFetching = useRef(false);
 
   useEffect(() => {
-    fetchAllProducts(page, selectedOption.value);
-  }, [page, selectedOption]);
+    fetchAllProducts(state.page, state.selectedOption.value);
+  }, [state.page, state.selectedOption]);
 
   const fetchAllProducts = async (page, category) => {
-    if (isFetching.current) return;
-    isFetching.current = true;
-
     let res;
-
     if (category && category !== "All") {
       res = await getCategory(category, page);
     } else {
@@ -43,44 +93,34 @@ const ViewProducts = () => {
     }
 
     if (res) {
-      if (page === 10) {
-        setProducts(res.data);
-      } else {
-        setProducts((prevProducts) => [...prevProducts, ...res.data]);
-      }
-      setActiveLoves((heart) => [...heart], Array(res.data.length).fill(false));
-
+      const actionType = page === 10 ? "SET_PRODUCTS" : "APPEND_PRODUCTS";
+      dispatch({ type: actionType, payload: res.data });
       if (res.data.length < page) {
-        setLoading(false);
+        dispatch({ type: "SET_LOADING", payload: false });
       }
+    } else {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
-    isFetching.current = false;
   };
 
   const handleChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    setPage(10); // Reset to initial page count for new category
-    setLoading(true);
+    dispatch({ type: "SET_SELECTED_OPTION", payload: selectedOption });
   };
 
   const handleClickLove = (index) => {
-    setActiveLoves((prevActiveLoves) => {
-      const newActiveLoves = [...prevActiveLoves];
-      newActiveLoves[index] = !newActiveLoves[index];
-      const newCount = newActiveLoves.filter(Boolean).length;
-      dispatch(setCount(newCount)); // Update count in Redux
-
-      return newActiveLoves;
-    });
+    dispatch({ type: "TOGGLE_LOVE", payload: index });
+    const newCount = state.activeLoves.filter(Boolean).length;
+    reduxDispatch(setCount(newCount)); // Update count in Redux
   };
 
   const handleSeeMore = () => {
-    setPage((prevPage) => prevPage + 5);
+    dispatch({ type: "INCREMENT_PAGE" });
   };
 
   const handleClickProduct = (index) => {
     alert(index);
   };
+
   return (
     <div className="total-tavAzza browse-categories">
       <div>
@@ -89,32 +129,26 @@ const ViewProducts = () => {
           <div className="col">
             <Select
               options={options}
-              value={selectedOption}
+              value={state.selectedOption}
               onChange={handleChange}
               className="float-start select"
-              placeholder={selectedOption.label}
+              placeholder={state.selectedOption.label}
             />
           </div>
         </div>
       </div>
-      {loading && selectedOption.value !== "All" ? (
-        <div class="loader-container">
-          <p class="loader"></p>
+      {state.loading && state.selectedOption.value !== "All" ? (
+        <div className="loader-container">
+          <p className="loader"></p>
           <div className="mess">APIs free, very slow</div>
         </div>
       ) : (
         <>
           <div className="total-tavAzza-items">
-            {products.length > 0 &&
-              products.slice(0, page).map((item, index) => (
-                <div
-                  className="total-tavAzza-item"
-                  style={{ animation: ".5s all" }}
-                >
-                  <div
-                    className="total-tavAzza-item__top"
-                    style={{ animation: ".2s all" }}
-                  >
+            {state.products.length > 0 &&
+              state.products.slice(0, state.page).map((item, index) => (
+                <div className="total-tavAzza-item" key={index}>
+                  <div className="total-tavAzza-item__top">
                     <div
                       className="img_product"
                       style={{ position: "relative" }}
@@ -124,7 +158,7 @@ const ViewProducts = () => {
                       </Link>
                       <div
                         className={`heart-love ${
-                          activeLoves[index] ? "active" : ""
+                          state.activeLoves[index] ? "active" : ""
                         }`}
                         onClick={() => handleClickLove(index)}
                       >
@@ -149,15 +183,15 @@ const ViewProducts = () => {
               ))}
           </div>
           <div className="d-flex justify-content-center m-2">
-            {loading && products.length >= page && (
-              <button
-                type="button"
-                className="see-more btn btn-info d-flex justify-content-center p-10"
-                onClick={handleSeeMore}
-              >
-                See more
-              </button>
-            )}
+            {/* {state.loading && state.products.length >= state.page && ( */}
+            <button
+              type="button"
+              className="see-more btn btn-info d-flex justify-content-center p-10"
+              onClick={handleSeeMore}
+            >
+              See more
+            </button>
+            {/* )} */}
           </div>
         </>
       )}
@@ -165,4 +199,4 @@ const ViewProducts = () => {
   );
 };
 
-export default ViewProducts;
+export default ViewProductsWithReduce;

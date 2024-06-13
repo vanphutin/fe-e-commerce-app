@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./ProductPage.scss"; // Import the SCSS file
 import Header from "../../Header/Header";
 import { getProductSinger } from "../../../severs/apiService";
@@ -13,6 +13,7 @@ const ProductPage = (props) => {
   useEffect(() => {
     fetchProductSinger(id);
   }, [id]);
+  // console.log(id);
 
   const fetchProductSinger = async (id) => {
     try {
@@ -22,6 +23,7 @@ const ProductPage = (props) => {
       console.error("Error fetching product data:", error);
     }
   };
+  console.log(product);
 
   if (!product) {
     return (
@@ -34,6 +36,10 @@ const ProductPage = (props) => {
       </>
     );
   }
+
+  const handleAddCart = (id) => {
+    console.log("id ->", id);
+  };
 
   return (
     <div className="container">
@@ -51,7 +57,8 @@ const ProductPage = (props) => {
           <div className="info-product row">
             <div className="info-left col">
               <div className="star">
-                <FaStar />({product.rating.rate}) {product.rating.count} reviews
+                <FaStar />({product.rating.rate}) {product.rating.count * 23}
+                reviews
               </div>
               <div className="size-weight">
                 <ul>
@@ -63,13 +70,20 @@ const ProductPage = (props) => {
             </div>
             <div className="info-right col">
               <div className="category">Category: {product.category}</div>
-              <div className="count">Stock: {product.count}</div>
+              <div className="count">Count: {product.rating.count}</div>
               <div className="price">
                 <div className="old-selling-price">${product.price * 0.42}</div>
                 <div className="new-selling-price">${product.price}</div>
               </div>
               <button>Buy now</button>
-              <button className="add-cart">Add to cart</button>
+              <Link to="/carts">
+                <button
+                  className="add-cart"
+                  onClick={() => handleAddCart(product.id)}
+                >
+                  Add to cart
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -79,7 +93,7 @@ const ProductPage = (props) => {
           <ul>
             <li>Description</li>
             <li>Features</li>
-            <li>Review ({product.rating.count})</li>
+            <li>Review ({product.rating.count * 23})</li>
             <li>Similar</li>
           </ul>
         </div>
