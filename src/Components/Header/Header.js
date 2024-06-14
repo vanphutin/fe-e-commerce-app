@@ -14,10 +14,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useActive from "../../hooks/useActive";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Header = (props) => {
-  const [hiddenInput, setHiddenInput] = useState(false);
   const count = useSelector((state) => state.count);
+  const account = useSelector((state) => state.user.account);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  console.log(account, "| ", isAuthenticated);
+  const [hiddenInput, setHiddenInput] = useState(false);
   const [login, setLogin] = useState(false);
   const navigate = useNavigate();
 
@@ -26,8 +30,18 @@ const Header = (props) => {
 
   useEffect(() => {
     const fixed = document.querySelector(".header-items");
-    if (fixed) {
-      fixed.classList.add("fixed");
+    console.log(fixed);
+    if (count.lenght > 0 && fixed) {
+      toast.info(`❤️ + 1`, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
 
       setTimeout(() => {
         fixed.classList.remove("fixed");
@@ -111,7 +125,7 @@ const Header = (props) => {
               <input type="text" placeholder="Enter name product..." />
             )}
           </div>
-          {!login ? (
+          {isAuthenticated === false ? (
             <>
               <button
                 className="btn btn-light text-wrap fw-800"

@@ -6,12 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { postLogin } from "../../severs/apiService";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -20,6 +22,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       const res = await postLogin(username, password);
+      // console.log("RES >> | ", res);
       if (!password || password === "") {
         toast.error("Invalid password");
         return setIsLoading(false);
@@ -30,6 +33,10 @@ const Login = () => {
       }
 
       if (res.data && res.data.token) {
+        dispatch({
+          type: "FETCH_USER_LOGIN_SUCCESS",
+          payload: res.data,
+        });
         toast.success("Login success");
         navigate("/");
       } else {
