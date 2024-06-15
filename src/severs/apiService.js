@@ -46,6 +46,28 @@ const postUser = (firstname, lastname, email, username, password) => {
     phone: "000-000-0000",
   });
 };
+const getAllUsers = (firstname, lastname, email, username, password) => {
+  return axios.get("/users", {
+    email: email,
+    username: username,
+    password: password,
+    name: {
+      firstname: firstname,
+      lastname: lastname,
+    },
+    address: {
+      city: "default city",
+      street: "default street",
+      number: 0,
+      zipcode: "00000-0000",
+      geolocation: {
+        lat: "0.0000",
+        long: "0.0000",
+      },
+    },
+    phone: "000-000-0000",
+  });
+};
 
 export { getAllProducts };
 export { getAllCategories };
@@ -53,3 +75,4 @@ export { getCategory };
 export { getProductSinger };
 export { postLogin };
 export { postUser };
+export { getAllUsers };

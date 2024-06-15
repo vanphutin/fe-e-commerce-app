@@ -147,8 +147,8 @@ const ViewProductsWithReduce = () => {
           <div className="total-tavAzza-items">
             {state.products.length > 0 &&
               state.products.slice(0, state.page).map((item, index) => (
-                <div className="total-tavAzza-item" key={index}>
-                  <div className="total-tavAzza-item__top">
+                <div className="total-tavAzza-item" key={index + 1}>
+                  <div className="total-tavAzza-item__top" key={item.id}>
                     <div
                       className="img_product"
                       style={{ position: "relative" }}

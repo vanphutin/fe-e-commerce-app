@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { getAllProducts, getCategory } from "../../../severs/apiService";
 import { FaHeart } from "react-icons/fa";
 import { IoStar } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCount } from "../../../redux/countSlice";
 import Select from "react-select";
 import "../Products.scss";
 import "./ViewProducts.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const options = [
   { value: "All", label: "All" },
@@ -25,6 +26,9 @@ const ViewProducts = () => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const dispatch = useDispatch();
   const isFetching = useRef(false);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     fetchAllProducts(page, selectedOption.value);
@@ -43,7 +47,7 @@ const ViewProducts = () => {
     }
 
     if (res) {
-      if (page === 10) {
+      if (page) {
         setProducts(res.data);
       } else {
         setProducts((prevProducts) => [...prevProducts, ...res.data]);
@@ -64,6 +68,20 @@ const ViewProducts = () => {
   };
 
   const handleClickLove = (index) => {
+    setClicked(true);
+    setTimeout(() => {
+      setClicked(false);
+    }, 2000);
+
+    setClicked(true);
+
+    setTimeout(() => {
+      setClicked(false);
+    }, 2000);
+    if (!isAuthenticated) {
+      navigate("/login");
+      toast.warning("You need to login !!!");
+    }
     setActiveLoves((prevActiveLoves) => {
       const newActiveLoves = [...prevActiveLoves];
       newActiveLoves[index] = !newActiveLoves[index];
@@ -78,8 +96,11 @@ const ViewProducts = () => {
     setPage((prevPage) => prevPage + 5);
   };
 
-  const handleClickProduct = (index) => {
-    alert(index);
+  const handleClicked = () => {
+    setClicked(true);
+    setTimeout(() => {
+      setClicked(false);
+    }, 2000);
   };
   return (
     <div className="total-tavAzza browse-categories">
@@ -125,10 +146,13 @@ const ViewProducts = () => {
                       <div
                         className={`heart-love ${
                           activeLoves[index] ? "active" : ""
-                        }`}
+                        } ${clicked ? "clicked" : ""}`}
                         onClick={() => handleClickLove(index)}
                       >
-                        <FaHeart className="icon_heart" />
+                        <FaHeart
+                          onClick={() => handleClicked()}
+                          className={`heart`}
+                        />
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Users from "./Components/Users/Users";
-import Admin from "./Components/Admin/Admin";
+import Users from "./Components/Role/Users/Users";
+import Admin from "./Components/Role/Admin/Admin";
 import ProductPage from "./Components/Products/Content/ProductPage";
 import Login from "./Components/Auth/Login";
 import Register from "./Components/Auth/Register";

@@ -1,0 +1,113 @@
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.user-info {
+  &.container {
+    margin-top: 20px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-left {
+    border: 1px dashed #6c757d;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+
+    .info-left-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      //   .btn {
+      //     border: 1px solid #dc3545;
+      //     color: #dc3545;
+      //     &:hover {
+      //       background-color: #dc3545;
+      //       color: #fff;
+      //     }
+      //   }
+    }
+
+    .info-left-content {
+      .info-avata {
+        margin: 25px 0;
+
+        img {
+          border-radius: 50%;
+          width: 90px;
+          height: 90px;
+          object-fit: contain;
+        }
+      }
+      .info-details {
+        label {
+          color: #5c5d5fd5;
+          font-size: 15px;
+          font-weight: 500;
+        }
+        p {
+          color: #000000d6;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  &-middle {
+    height: 70vh;
+    width: 2px !important;
+    background-color: #4348443d;
+    border: 2px;
+  }
+
+  &-right {
+    border: 1px dashed #6c757d;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f8f9fa;
+
+    .cart-products-view {
+      .cart-items {
+        border-bottom: 1px solid;
+        .cart-item {
+          margin: 20px 0;
+          height: 80px;
+          align-items: center;
+        }
+        .row {
+          img {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #9f9d9d5f;
+            border-radius: 6px;
+          }
+          .describe {
+            max-width: 400px; // Set the maximum width of the element
+            white-space: nowrap; // Prevent the text from wrapping
+            overflow: hidden; // Hide any text that exceeds the element's width
+            text-overflow: ellipsis; // Display an ellipsis (...) at the end of the truncated text
+            font-weight: 600;
+            font-size: 18px;
+          }
+
+          .delete {
+            font-size: 50px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

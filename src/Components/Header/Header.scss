@@ -94,11 +94,25 @@
         display: flex;
         align-items: center;
         cursor: pointer;
+        position: relative;
 
         p {
           margin-bottom: 0;
           margin-left: 10px;
           font-weight: 700;
+        }
+        .cart-details {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 10px;
+          z-index: 1000;
+          width: 400px; /* Adjust width as needed */
+          background-color: #ccc;
+          height: 70vh;
+          overflow-y: auto;
         }
       }
     }

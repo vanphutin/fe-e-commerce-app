@@ -5,10 +5,18 @@ import "./ProductPage.scss"; // Import the SCSS file
 import Header from "../../Header/Header";
 import { getProductSinger } from "../../../severs/apiService";
 import "./ViewProducts.scss";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const ProductPage = (props) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+
+  let count = useSelector((state) => state.count);
+  if (count >= 0) {
+    count = 0;
+    toast.dismiss();
+  }
 
   useEffect(() => {
     fetchProductSinger(id);
@@ -19,6 +27,7 @@ const ProductPage = (props) => {
     try {
       const res = await getProductSinger(id);
       setProduct(res.data);
+      console.log("res.data", res.data);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
@@ -38,7 +47,7 @@ const ProductPage = (props) => {
   }
 
   const handleAddCart = (id) => {
-    console.log("id ->", id);
+    console.log("id ->", product);
   };
 
   return (
@@ -76,14 +85,13 @@ const ProductPage = (props) => {
                 <div className="new-selling-price">${product.price}</div>
               </div>
               <button>Buy now</button>
-              <Link to="/carts">
-                <button
-                  className="add-cart"
-                  onClick={() => handleAddCart(product.id)}
-                >
-                  Add to cart
-                </button>
-              </Link>
+
+              <button
+                className="add-cart"
+                onClick={() => handleAddCart(product.id)}
+              >
+                Add to cart
+              </button>
             </div>
           </div>
         </div>

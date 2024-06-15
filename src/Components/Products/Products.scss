@@ -86,10 +86,15 @@ h3.categories {
             position: absolute;
             right: 0;
             bottom: 0;
+            transition: transform 0.5s ease;
             &.active {
               color: red;
+              &.clicked {
+                transform: scale(1.5);
+                transition: transform 0.5s ease;
+              }
             }
-            .icon_heart {
+            .heart {
               z-index: 111000 !important;
               font-size: 25px;
               padding: 5px;

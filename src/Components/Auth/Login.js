@@ -22,7 +22,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       const res = await postLogin(username, password);
-      // console.log("RES >> | ", res);
+
       if (!password || password === "") {
         toast.error("Invalid password");
         return setIsLoading(false);
@@ -44,6 +44,7 @@ const Login = () => {
         return setIsLoading(false);
       }
       // console.log("res >>", res);
+      navigate("/users", { state: { username, password } });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError("Unauthorized: Incorrect username or password.");
