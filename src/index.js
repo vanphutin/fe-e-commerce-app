@@ -8,15 +8,18 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "react-toastify/dist/ReactToastify.css";
 import Layout from "./Layout";
+import { ProductProvider } from "./Components/Products/Content/ContextProduct";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-  </Provider>
+  <ProductProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </Provider>
+  </ProductProvider>
 );
 
 reportWebVitals();

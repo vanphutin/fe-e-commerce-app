@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import "./ProductPage.scss"; // Import the SCSS file
@@ -7,6 +7,16 @@ import { getProductSinger } from "../../../severs/apiService";
 import "./ViewProducts.scss";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
+// export const ContextProduct = createContext();
+// export const productProvider = (pros) => {
+//   return (
+//     <ContextProduct.Provider
+//       value={product}
+//       {...pros}
+//     ></ContextProduct.Provider>
+//   );
+// };
 
 const ProductPage = (props) => {
   const { id } = useParams();
