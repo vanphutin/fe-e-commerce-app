@@ -8,6 +8,7 @@ import Register from "./Components/Auth/Register";
 import App from "./App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ViewProducts from "./Components/Products/Content/ViewProducts";
 
 const Layout = () => {
   return (
@@ -16,6 +17,7 @@ const Layout = () => {
         <Route path="/" element={<App />} />
         <Route path="/users" element={<Users />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/products" element={<ViewProducts />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

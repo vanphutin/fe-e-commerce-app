@@ -11,12 +11,13 @@ import logo from "../../assets/logo/Vector.svg";
 import "./Header.scss";
 import "../../assets/font/Poppins/Poppins-Bold.ttf";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useActive from "../../hooks/useActive";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdRemoveShoppingCart } from "react-icons/md";
 import Cart from "../Products/Content/Cart";
+import { useProductsContext } from "../Products/Content/ContextProduct";
 
 const Header = (props) => {
   const count = useSelector((state) => state.count);
@@ -27,23 +28,19 @@ const Header = (props) => {
   const navigate = useNavigate();
   const [isCartVisible, setIsCartVisible] = useState(false);
 
+  const { product, setProduct, newCart, setNewCart, addToCart } =
+    useProductsContext();
+  const { pathname } = useLocation();
+  console.log("ead", newCart);
+
   //custom hook
   const { active, nodeRef } = useActive();
   const fixedRef = useRef(null);
+  const refSctrool = useRef(null);
   useEffect(() => {
     const fixed = fixedRef.current;
     // console.log(fixed, count);
     if (count >= 1 && fixed) {
-      toast.info(`❤️ ${count}`, {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
       setTimeout(() => {
         if (fixed.classList.contains("fixed")) {
           fixed.classList.remove("fixed");
@@ -61,6 +58,13 @@ const Header = (props) => {
   const handleSignUp = () => {
     navigate("/register");
   };
+  const scrollIntoView_PRODUCTS = () => {
+    const productElement = document.getElementById("products");
+    if (productElement) {
+      productElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="header">
       <div className="header-items container " ref={fixedRef}>
@@ -92,11 +96,12 @@ const Header = (props) => {
             </li>
             <li>
               <Link
-                to="#beauty"
-                className={active === 2 ? "active" : ""}
+                onClick={scrollIntoView_PRODUCTS}
+                className={`products ${active === 2 ? "active" : ""}`}
                 ref={(el) => (nodeRef.current[2] = el)}
+                rel={refSctrool}
               >
-                Beauty <FaAngleDown />
+                Products <FaAngleDown />
               </Link>
             </li>
             <li>
@@ -171,16 +176,29 @@ const Header = (props) => {
                   onMouseEnter={() => setIsCartVisible(true)}
                   onMouseLeave={() => setIsCartVisible(false)}
                 >
-                  <FaShoppingCart size="24px" />
+                  {newCart.length > 0 ? (
+                    <div className="cart-count ">
+                      <button type="button" class="btn  position-relative p-0">
+                        <FaShoppingCart size="24px" />
+                        <span class="position-absolute  top-0 start-100 translate-middle badge border border-light  rounded-pill bg-danger p-1">
+                          <span class="visually">{newCart.length || 0}</span>
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    <MdRemoveShoppingCart size="24px" />
+                  )}
                   <p className="pice">$55.55</p>
                   {isCartVisible && <Cart />}
                 </div>
               </div>
               <div className="header-avata">
-                <img
-                  src="https://avatars.githubusercontent.com/u/162568386?s=400&u=73ca66903679e2fca3f97ea4c646bdb62a35b382&v=4"
-                  alt=""
-                />
+                <Link to="/users">
+                  <img
+                    src="https://avatars.githubusercontent.com/u/162568386?s=400&u=73ca66903679e2fca3f97ea4c646bdb62a35b382&v=4"
+                    alt=""
+                  />
+                </Link>
               </div>
             </>
           )}

@@ -111,7 +111,7 @@
           z-index: 1000;
           width: 400px; /* Adjust width as needed */
           background-color: #ccc;
-          height: 70vh;
+          max-height: 70vh;
           overflow-y: auto;
         }
       }

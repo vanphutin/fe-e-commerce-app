@@ -1,26 +1,20 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./ProductPage.scss"; // Import the SCSS file
 import Header from "../../Header/Header";
 import { getProductSinger } from "../../../severs/apiService";
 import "./ViewProducts.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useProductsContext } from "./ContextProduct";
 
-// export const ContextProduct = createContext();
-// export const productProvider = (pros) => {
-//   return (
-//     <ContextProduct.Provider
-//       value={product}
-//       {...pros}
-//     ></ContextProduct.Provider>
-//   );
-// };
-
-const ProductPage = (props) => {
+const ProductPage = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" }); // scrollTo on top
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
+  const { product, setProduct, newCart, setNewCart, addToCart } =
+    useProductsContext();
+  const dispatch = useDispatch();
 
   let count = useSelector((state) => state.count);
   if (count >= 0) {
@@ -31,34 +25,35 @@ const ProductPage = (props) => {
   useEffect(() => {
     fetchProductSinger(id);
   }, [id]);
-  // console.log(id);
 
   const fetchProductSinger = async (id) => {
     try {
       const res = await getProductSinger(id);
       setProduct(res.data);
-      console.log("res.data", res.data);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
   };
-  console.log(product);
+
+  const handleAddCart = () => {
+    setNewCart(product);
+    dispatch({
+      type: "GET_PRODUCTS",
+      payload: product,
+    });
+  };
 
   if (!product) {
     return (
       <>
         <Header />
-        <div class="loader-container">
-          <p class="loader"></p>
+        <div className="loader-container">
+          <p className="loader"></p>
           <div className="mess">APIs free, very slow</div>
         </div>
       </>
     );
   }
-
-  const handleAddCart = (id) => {
-    console.log("id ->", product);
-  };
 
   return (
     <div className="container">
@@ -76,8 +71,8 @@ const ProductPage = (props) => {
           <div className="info-product row">
             <div className="info-left col">
               <div className="star">
-                <FaStar />({product.rating.rate}) {product.rating.count * 23}
-                reviews
+                <FaStar />({product?.rating?.rate}){" "}
+                {product?.rating?.count * 23} reviews
               </div>
               <div className="size-weight">
                 <ul>
@@ -89,16 +84,23 @@ const ProductPage = (props) => {
             </div>
             <div className="info-right col">
               <div className="category">Category: {product.category}</div>
-              <div className="count">Count: {product.rating.count}</div>
+              <div className="count">Count: {product?.rating?.count}</div>
               <div className="price">
                 <div className="old-selling-price">${product.price * 0.42}</div>
                 <div className="new-selling-price">${product.price}</div>
               </div>
               <button>Buy now</button>
-
               <button
                 className="add-cart"
-                onClick={() => handleAddCart(product.id)}
+                onClick={() =>
+                  addToCart({
+                    title: product.title,
+                    id: product.id,
+                    image: product.image,
+                    count: product?.rating?.count,
+                    category: product.category,
+                  })
+                }
               >
                 Add to cart
               </button>
@@ -106,12 +108,12 @@ const ProductPage = (props) => {
           </div>
         </div>
       </div>
-      <div className="description-product ">
+      <div className="description-product">
         <div className="review-header">
           <ul>
             <li>Description</li>
             <li>Features</li>
-            <li>Review ({product.rating.count * 23})</li>
+            <li>Review ({product?.rating?.count * 23})</li>
             <li>Similar</li>
           </ul>
         </div>

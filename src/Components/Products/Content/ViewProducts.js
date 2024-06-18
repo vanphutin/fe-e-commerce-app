@@ -103,7 +103,7 @@ const ViewProducts = () => {
     }, 2000);
   };
   return (
-    <div className="total-tavAzza browse-categories">
+    <div id="products" className="total-tavAzza browse-categories">
       <div>
         <div className="option row d-flex align-items-center ms-3 outline-light">
           <p className="col-auto mb-0">Sorted by</p>

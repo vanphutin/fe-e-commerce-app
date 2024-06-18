@@ -1,23 +1,59 @@
-import React, { createContext, useEffect, useState } from "react";
-import { getAllProducts } from "../../../severs/apiService";
+import React, { createContext, useContext, useState } from "react";
 
-export const ContextProduct = createContext();
+// Tạo Context
+const ProductsContext = createContext();
 
-export const ProductProvider = (props) => {
-  const [product, setProduct] = useState({}); // Khởi tạo state product với giá trị ban đầu là null
+// Tạo Provider
+function ProductsProvider({ children }) {
+  const [product, setProduct] = useState([]);
+  const [newCart, setNewCart] = useState([]);
 
-  useEffect(() => {
-    fetchProductSinger();
-  }, []);
+  function addToCart(newCart) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setNewCart((prevItems) => {
+      const isExisted = prevItems.some((item) => item.id === newCart.id);
+      console.log("isExisted", isExisted);
+      if (isExisted) {
+        console.log("cartItems1", newCart);
 
-  const fetchProductSinger = async () => {
-    try {
-      const res = await getAllProducts();
-      setProduct(res.data);
-      console.log("res.data", res.data);
-    } catch (error) {
-      console.error("Error fetching product data:", error);
-    }
+        return [...prevItems];
+      } else {
+        console.log("cartItems2", newCart);
+
+        return [...prevItems, newCart];
+      }
+    });
+  }
+
+  function deleteCart(CartId) {
+    setNewCart((prevItems) => prevItems.filter((item) => item.id !== CartId));
+  }
+  // console.log("newCart", newCart);
+  const value = {
+    product,
+    newCart,
+    setProduct,
+    setNewCart,
+    addToCart,
+    deleteCart,
   };
-  return <ContextProduct.Provider value={{ product, setProduct }} {...props} />;
-};
+
+  return (
+    <ProductsContext.Provider value={value}>
+      {children}
+    </ProductsContext.Provider>
+  );
+}
+
+// Custom Hook để sử dụng context
+function useProductsContext() {
+  const context = useContext(ProductsContext);
+  if (!context) {
+    throw new Error(
+      "useProductsContext must be used within a ProductsProvider"
+    );
+  }
+  return context;
+}
+
+export { ProductsProvider, useProductsContext };

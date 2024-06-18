@@ -10,6 +10,7 @@ import {
   postUser,
 } from "../../../severs/apiService.js";
 import { useLocation } from "react-router-dom";
+import { useProductsContext } from "../../Products/Content/ContextProduct.js";
 
 const Users = () => {
   const [hiddle, setHiddle] = useState(false);
@@ -19,6 +20,9 @@ const Users = () => {
   const { username, password } = location.state || {};
   // console.log("username, password ", username, password);
   const userName = username;
+
+  const { deleteCart, newCart, setNewCart, addToCart } = useProductsContext();
+  console.log("new ủe", newCart);
   const HandleHiddlePass = () => {
     setHiddle(true);
     setTimeout(() => {
@@ -126,34 +130,41 @@ const Users = () => {
               <div className="gap"></div>
             </div>
 
-            <div className="col-md-5 user-info-right">
+            <div className="col-md-5 cart-details user-info-right">
               <div className="info-left-header d-flex justify-content-between   ">
                 <h2 className="rol-sm title">Cart Products</h2>
-                {/* <p>items : 2</p> */}
                 <button className="btn btn-outline-danger ">Buy Now</button>
               </div>
-              <div className="cart-products-view">
-                <div className="cart-items">
-                  <div className="row cart-item">
-                    <div className="col-3">
-                      <img
-                        src="https://sharkskin.com.au/cdn/shop/files/Blue_4_1400x.jpg?v=1709507149"
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-7">
-                      <div className="describe">
-                        Lorem ipsum dolocscscdcsdrdolocscscdcsdr sit amet.
+              <hr />
+              {newCart.map((item, index) => (
+                <div className="cart-products-view">
+                  <div className="cart-items">
+                    <div className="row cart-item">
+                      <div className="col-3">
+                        <img src={item.image} alt="" />
                       </div>
-                      <div className="category">Category : Man's</div>
-                      <div className="count">Count : 1</div>
-                    </div>
-                    <div className="col-2">
-                      <MdDelete className="delete" />
+                      <div className="col-7">
+                        <div className="describe">{item.title}</div>
+                        <div className="category">
+                          <small>Category : {item.category}</small>
+                        </div>
+                        <div className="count">Count : {item.count}</div>
+                      </div>
+                      <div
+                        className="col-2"
+                        onClick={() => deleteCart(item.id)}
+                      >
+                        <MdDelete className="delete" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
+              {newCart.length === 0 && (
+                <p className="cart-empty text-center fw-bolder fs-2">
+                  Cart is empty
+                </p>
+              )}
             </div>
           </div>
         </div>
