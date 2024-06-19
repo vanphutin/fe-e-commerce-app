@@ -1,0 +1,28 @@
+// Checkout.scss
+
+.total-summary {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  .pay {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 144.444%;
+    color: rgba(13, 13, 13, 0.81);
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    margin: 15px 0;
+  }
+  .btn-checkout {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .btn {
+      width: 100%;
+    }
+  }
+}

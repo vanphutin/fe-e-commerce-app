@@ -14,7 +14,7 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
-      console.log(action?.payload?.category);
+      // console.log(action?.payload?.category);
       return {
         ...state,
         product: {

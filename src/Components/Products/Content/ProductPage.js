@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./ProductPage.scss"; // Import the SCSS file
 import Header from "../../Header/Header";
 import { getProductSinger } from "../../../severs/apiService";
@@ -15,12 +15,13 @@ const ProductPage = () => {
   const { product, setProduct, newCart, setNewCart, addToCart } =
     useProductsContext();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   let count = useSelector((state) => state.count);
-  if (count >= 0) {
-    count = 0;
-    toast.dismiss();
-  }
+  // if (count >= 0) {
+  //   count = 0;
+  //   toast.dismiss();
+  // }
 
   useEffect(() => {
     fetchProductSinger(id);
@@ -90,20 +91,23 @@ const ProductPage = () => {
                 <div className="new-selling-price">${product.price}</div>
               </div>
               <button>Buy now</button>
-              <button
-                className="add-cart"
-                onClick={() =>
-                  addToCart({
-                    title: product.title,
-                    id: product.id,
-                    image: product.image,
-                    count: product?.rating?.count,
-                    category: product.category,
-                  })
-                }
-              >
-                Add to cart
-              </button>
+              <Link to={`${isAuthenticated ? "" : "/login"}`}>
+                <button
+                  className="add-cart"
+                  onClick={() =>
+                    addToCart({
+                      title: product.title,
+                      id: product.id,
+                      image: product.image,
+                      count: product?.rating?.count,
+                      category: product.category,
+                      price: product?.price,
+                    })
+                  }
+                >
+                  Add to cart
+                </button>
+              </Link>
             </div>
           </div>
         </div>

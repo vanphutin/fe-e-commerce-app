@@ -7,26 +7,24 @@ const ProductsContext = createContext();
 function ProductsProvider({ children }) {
   const [product, setProduct] = useState([]);
   const [newCart, setNewCart] = useState([]);
+  const [countCart, setCountCart] = useState([]);
+  // console.log(newCart);
 
   function addToCart(newCart) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     setNewCart((prevItems) => {
-      const isExisted = prevItems.some((item) => item.id === newCart.id);
-      console.log("isExisted", isExisted);
+      // console.log("prevItems", prevItems);
+      const isExisted = prevItems.some((item) => item?.id === newCart?.id);
       if (isExisted) {
-        console.log("cartItems1", newCart);
-
         return [...prevItems];
       } else {
-        console.log("cartItems2", newCart);
-
         return [...prevItems, newCart];
       }
     });
   }
+  // console.log("count", countCart);
 
   function deleteCart(CartId) {
-    setNewCart((prevItems) => prevItems.filter((item) => item.id !== CartId));
+    setNewCart((prevItems) => prevItems.filter((item) => item?.id !== CartId));
   }
   // console.log("newCart", newCart);
   const value = {
@@ -36,6 +34,7 @@ function ProductsProvider({ children }) {
     setNewCart,
     addToCart,
     deleteCart,
+    countCart,
   };
 
   return (

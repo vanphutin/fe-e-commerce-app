@@ -9,7 +9,7 @@ import {
   postLogin,
   postUser,
 } from "../../../severs/apiService.js";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useProductsContext } from "../../Products/Content/ContextProduct.js";
 
 const Users = () => {
@@ -22,7 +22,7 @@ const Users = () => {
   const userName = username;
 
   const { deleteCart, newCart, setNewCart, addToCart } = useProductsContext();
-  console.log("new ủe", newCart);
+  // console.log("new ủe", newCart);
   const HandleHiddlePass = () => {
     setHiddle(true);
     setTimeout(() => {
@@ -133,7 +133,9 @@ const Users = () => {
             <div className="col-md-5 cart-details user-info-right">
               <div className="info-left-header d-flex justify-content-between   ">
                 <h2 className="rol-sm title">Cart Products</h2>
-                <button className="btn btn-outline-danger ">Buy Now</button>
+                <button className="btn btn-info">
+                  <Link to="/checkout">Buy Now</Link>
+                </button>
               </div>
               <hr />
               {newCart.map((item, index) => (

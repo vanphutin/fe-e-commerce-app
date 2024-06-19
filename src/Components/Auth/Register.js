@@ -59,7 +59,7 @@ const Register = () => {
       } else {
         toast.error("Registration error: Invalid response received");
       }
-      console.log("res >>", res);
+      // console.log("res >>", res);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError("Unauthorized: Incorrect username or password.");

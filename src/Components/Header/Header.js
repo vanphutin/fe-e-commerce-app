@@ -31,7 +31,6 @@ const Header = (props) => {
   const { product, setProduct, newCart, setNewCart, addToCart } =
     useProductsContext();
   const { pathname } = useLocation();
-  console.log("ead", newCart);
 
   //custom hook
   const { active, nodeRef } = useActive();
@@ -64,6 +63,12 @@ const Header = (props) => {
       productElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const scrollIntoView_ABOUT = () => {
+    const productElement = document.getElementById("footer");
+    if (productElement) {
+      productElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div className="header">
@@ -87,11 +92,11 @@ const Header = (props) => {
             </li>
             <li>
               <Link
-                to="#grocery"
-                className={active === 1 ? "active" : ""}
+                onClick={scrollIntoView_ABOUT}
+                className={`footer ${active === 1 ? "active" : ""}`}
                 ref={(el) => (nodeRef.current[1] = el)}
               >
-                Grocery <FaAngleDown />
+                About <FaAngleDown />
               </Link>
             </li>
             <li>
@@ -178,17 +183,22 @@ const Header = (props) => {
                 >
                   {newCart.length > 0 ? (
                     <div className="cart-count ">
-                      <button type="button" class="btn  position-relative p-0">
+                      <button
+                        type="button"
+                        className="btn  position-relative p-0"
+                      >
                         <FaShoppingCart size="24px" />
-                        <span class="position-absolute  top-0 start-100 translate-middle badge border border-light  rounded-pill bg-danger p-1">
-                          <span class="visually">{newCart.length || 0}</span>
+                        <span className="position-absolute  top-0 start-100 translate-middle badge border border-light  rounded-pill bg-danger p-1">
+                          <span className="visually">
+                            {newCart.length || 0}
+                          </span>
                         </span>
                       </button>
                     </div>
                   ) : (
                     <MdRemoveShoppingCart size="24px" />
                   )}
-                  <p className="pice">$55.55</p>
+                  <p className="pice">$00.00</p>
                   {isCartVisible && <Cart />}
                 </div>
               </div>

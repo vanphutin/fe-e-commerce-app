@@ -103,7 +103,7 @@ const ViewProducts = () => {
     }, 2000);
   };
   return (
-    <div id="products" className="total-tavAzza browse-categories">
+    <div className="total-tavAzza browse-categories">
       <div>
         <div className="option row d-flex align-items-center ms-3 outline-light">
           <p className="col-auto mb-0">Sorted by</p>
@@ -119,8 +119,8 @@ const ViewProducts = () => {
         </div>
       </div>
       {loading && selectedOption.value !== "All" ? (
-        <div class="loader-container">
-          <p class="loader"></p>
+        <div className="loader-container">
+          <p className="loader"></p>
           <div className="mess">APIs free, very slow</div>
         </div>
       ) : (
@@ -131,6 +131,7 @@ const ViewProducts = () => {
                 <div
                   className="total-tavAzza-item"
                   style={{ animation: ".5s all" }}
+                  key={index}
                 >
                   <div
                     className="total-tavAzza-item__top"
