@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/e-commerce-app/static/css/main.03350772.css",
+    "main.js": "/e-commerce-app/static/js/main.223df133.js",
+    "static/js/453.e5091238.chunk.js": "/e-commerce-app/static/js/453.e5091238.chunk.js",
+    "static/media/cover.png": "/e-commerce-app/static/media/cover.5431a01c8c8a92b32ce4.png",
+    "static/media/qr.jpg": "/e-commerce-app/static/media/qr.2edd1b552fe76b3aa102.jpg",
+    "static/media/Poppins-Light.ttf": "/e-commerce-app/static/media/Poppins-Light.7641a0f76ca9ef6c252c.ttf",
+    "static/media/Poppins-Bold.ttf": "/e-commerce-app/static/media/Poppins-Bold.cdb29a5d7ccf57ff05a3.ttf",
+    "static/media/register.png": "/e-commerce-app/static/media/register.cca2423f35dc340758e5.png",
+    "static/media/logo.svg": "/e-commerce-app/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/e-commerce-app/index.html",
+    "static/media/Vector.svg": "/e-commerce-app/static/media/Vector.117b0cf9c17e0469520d692f987f9b19.svg",
+    "main.03350772.css.map": "/e-commerce-app/static/css/main.03350772.css.map",
+    "main.223df133.js.map": "/e-commerce-app/static/js/main.223df133.js.map",
+    "453.e5091238.chunk.js.map": "/e-commerce-app/static/js/453.e5091238.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.03350772.css",
+    "static/js/main.223df133.js"
+  ]
+}
